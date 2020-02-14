@@ -1,0 +1,17 @@
+  <div class="header">
+    <h1 class="title">Movie Search</h1>
+    <input class="input" type="text" id="title" placeholder="Search By Title" value="" [(ngModel)]="movieTitle">
+    <button class="input-button" (click)="handleSeachClicked()">Search</button>
+  </div>
+  <app-modal [hidden]="!loading"></app-modal>
+  <app-modal *ngIf="showErrorModal" [errorCode]="movies?.Error" (closeModal)="showErrorModal = false"></app-modal>
+  <div *ngIf="!showErrorModal && movies.Response !== 'False'" class="flex-row">
+    <div *ngFor="let movie of movies?.Search">
+      <div class="movie-image"><img (click)="handleMovieClicked(movie.imdbID)" [src]="movie.Poster" alt="" /></div>
+      <div class="text">{{ movie.Title }} / {{ movie.Year }}</div>
+      <br />
+    </div>
+  </div>
+  <div *ngIf="showModal && !loading">
+    <app-movie-details *ngIf="movieDetails" [details]="movieDetails" (closeModal)="showModal = false"></app-movie-details>
+  </div>
